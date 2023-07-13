@@ -2,7 +2,7 @@ import streamlit as st
 from PyPDF4 import PdfFileMerger
 from PIL import Image
 from PyPDF2 import PdfReader, PdfWriter
-import io,os
+import io,os,zipfile,base64
 
 def merge_pdf_files(file_paths):
     merger = PdfFileMerger()
@@ -89,18 +89,37 @@ def main():
 
     if st.button('Split PDFs for all') and uploaded_files:
         file_paths = [file for file in uploaded_files if file.name.lower().endswith(".pdf")]
-        output_folder = "pdf_all"
-        os.makedirs(output_folder, exist_ok=True)
-        #output_folder = st.text_input("请在桌面创建一个文件夹：pdf_all", value=r"C:\Users\Administrator\Desktop\pdf_all")
-        #st.warning("请确保桌面是否有pdf_all文件夹(或者自行修改保存路径）.")
         if file_paths:
-            splitpdf = split_pdf(file_paths[0])  # 仅使用第一个文件进行拆分
-            if splitpdf:
-                for i, pdf in enumerate(splitpdf, start=1):
-                    output_pdf = os.path.join(output_folder, f'page_{i}.pdf')
-                    with open(output_pdf, 'wb') as output_file:
-                        output_file.write(pdf.getvalue())
-                st.success("PDF 文件拆分完成！")
+            output_folder = "pdf_all"  # 在当前工作目录创建名为 "pdf_all" 的文件夹
+            os.makedirs(output_folder, exist_ok=True)
+
+            for file_path in file_paths:
+                splitpdf = split_pdf(file_path)  # 拆分 PDF 文件
+                if splitpdf:
+                    for i, pdf in enumerate(splitpdf, start=1):
+                        output_pdf = os.path.join(output_folder, f'page_{i}.pdf')
+                        with open(output_pdf, 'wb') as output_file:
+                            output_file.write(pdf.getvalue())
+
+            # 将所有文件打包为 ZIP 文件
+            zip_file_name = "pdf_all.zip"
+            with zipfile.ZipFile(zip_file_name, 'w') as zip_file:
+                for folder_name, subfolders, filenames in os.walk(output_folder):
+                    for filename in filenames:
+                        file_path = os.path.join(folder_name, filename)
+                        zip_file.write(file_path, arcname=os.path.relpath(file_path, output_folder))
+
+            # 提供下载链接
+            with open(zip_file_name, 'rb') as file:
+                st.markdown(
+                    f"## [download all the split_pdf](data:application/zip;base64,{base64.b64encode(file.read()).decode()})")
+
+            # 删除拆分后的文件和 ZIP 文件
+            for folder_name, subfolders, filenames in os.walk(output_folder):
+                for filename in filenames:
+                    file_path = os.path.join(folder_name, filename)
+                    os.remove(file_path)
+            os.remove(zip_file_name)
 
 
 
