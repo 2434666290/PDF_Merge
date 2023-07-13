@@ -112,7 +112,7 @@ def main():
             # 提供下载链接
             with open(zip_file_name, 'rb') as file:
                 st.markdown(
-                    f"## [download all the split_pdf](data:application/zip;base64,{base64.b64encode(file.read()).decode()})")
+                    f"## [Download All the Split PDF](data:application/zip;base64,{base64.b64encode(file.read()).decode()})")
 
             # 删除拆分后的文件和 ZIP 文件
             for folder_name, subfolders, filenames in os.walk(output_folder):
