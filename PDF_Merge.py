@@ -45,7 +45,7 @@ def split_pdf(input_pdf):
 
 
 def main():
-    st.title("PDF Merger")
+    st.title("PDF Tools")
     st.write("PDF_Tools created by Li")
     uploaded_files = st.file_uploader("Upload PDF files or images", accept_multiple_files=True)
 
@@ -76,7 +76,7 @@ def main():
         else:
             st.warning("Please upload at least one image file for conversion.")
 
-    if st.button('Split PDFs for details') and uploaded_files:
+    if st.button('Split PDFs for Details') and uploaded_files:
         file_paths = [file for file in uploaded_files if file.name.lower().endswith(".pdf")]
         if file_paths:
             splitpdf = split_pdf(file_paths[0])  # 仅使用第一个文件进行拆分
@@ -87,7 +87,7 @@ def main():
                     download_filename = f"page_{i}.pdf"
                     st.download_button(f"Download {download_filename}", pdf.getvalue(), file_name=download_filename)
 
-    if st.button('Split PDFs for all') and uploaded_files:
+    if st.button('Split PDFs for All') and uploaded_files:
         file_paths = [file for file in uploaded_files if file.name.lower().endswith(".pdf")]
         if file_paths:
             output_folder = "pdf_all"  # 在当前工作目录创建名为 "pdf_all" 的文件夹
