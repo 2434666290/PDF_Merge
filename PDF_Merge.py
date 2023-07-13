@@ -89,7 +89,7 @@ def main():
 
     if st.button('Split PDFs for all') and uploaded_files:
         file_paths = [file for file in uploaded_files if file.name.lower().endswith(".pdf")]
-        output_folder = st.text_input("请在桌面创建一个文件夹：pdf_all", value=r"C:\Users\Administrator\Desktop")
+        output_folder = st.text_input("请在桌面创建一个文件夹：pdf_all", value=r"C:\Users\Administrator\Desktop\pdf_all")
         st.warning("请确保桌面是否有pdf_all文件夹(或者自行修改保存路径）.")
         if file_paths:
             splitpdf = split_pdf(file_paths[0])  # 仅使用第一个文件进行拆分
