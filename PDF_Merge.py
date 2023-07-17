@@ -114,9 +114,12 @@ def main():
                 st.markdown(
                     f"## [Download All the Split PDF](data:application/zip;base64,{base64.b64encode(file.read()).decode()})")
 
-           
-
-
+           # 删除拆分后的文件和 ZIP 文件
+            for folder_name, subfolders, filenames in os.walk(output_folder):
+                for filename in filenames:
+                    file_path = os.path.join(folder_name, filename)
+                    os.remove(file_path)
+            os.remove(zip_file_name)
 
 
 if __name__ == "__main__":
