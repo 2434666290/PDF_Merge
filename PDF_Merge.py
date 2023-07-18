@@ -48,8 +48,8 @@ def split_pdf(input_pdf):
 
 
 def main():
-    st.title("PDF Tools")
-    st.write("PDF_Tools created by Li")
+    st.title("PDF 工具")
+    st.text("由Li创建的PDF工具")
     choose = st.selectbox('选择你需要的功能', ['PDF合并', '图片转化成PDF', 'PDF拆分(一张一张)', 'PDF拆分(zip打包)'])
     uploaded_files = st.file_uploader("上传pdf文件或者图片", accept_multiple_files=True)
 
