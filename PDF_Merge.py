@@ -62,7 +62,7 @@ def main():
                 st.success("PDF文件合并成功!")
                 pdf_bytes = merged_pdf.getvalue()
                 b64 = base64.b64encode(pdf_bytes).decode()
-                href = f'<a href="data:application/octet-stream;base64,{b64}" download="merged.pdf">Download merged.pdf</a>'
+                href = f'<a href="data:application/octet-stream;base64,{b64}" download="merged.pdf">下载 merged.pdf</a>'
                 st.markdown(href, unsafe_allow_html=True)
             else:
                 st.warning("请上传多个PDF文件合并.")
@@ -83,7 +83,7 @@ def main():
                 st.success("图片转化成PDF成功!")
                 pdf_bytes = merged_pdf.getvalue()
                 b64 = base64.b64encode(pdf_bytes).decode()
-                href = f'<a href="data:application/octet-stream;base64,{b64}" download="converted.pdf">Download converted.pdf</a>'
+                href = f'<a href="data:application/octet-stream;base64,{b64}" download="converted.pdf">下载 converted.pdf</a>'
                 st.markdown(href, unsafe_allow_html=True)
             else:
                 st.warning("请上传至少一张图.")
@@ -100,7 +100,7 @@ def main():
                         download_filename = f"page_{i}.pdf"
                         pdf_bytes = pdf.getvalue()
                         b64 = base64.b64encode(pdf_bytes).decode()
-                        href = f'<a href="data:application/octet-stream;base64,{b64}" download="{download_filename}">Download{download_filename}</a>'
+                        href = f'<a href="data:application/octet-stream;base64,{b64}" download="{download_filename}">下载{download_filename}</a>'
                         st.markdown(href, unsafe_allow_html=True)
 
     if choose == 'PDF拆分(zip打包)' and uploaded_files:
