@@ -100,7 +100,7 @@ def main():
                         download_filename = f"page_{i}.pdf"
                         pdf_bytes = pdf.getvalue()
                         b64 = base64.b64encode(pdf_bytes).decode()
-                        href = f'<a href="data:application/octet-stream;base64,{b64}" download="{download_filename}">下载{download_filename}</a>'
+                        href = f'<a href="data:application/octet-stream;base64,{b64}" download="{download_filename}">下载 {download_filename}</a>'
                         st.markdown(href, unsafe_allow_html=True)
 
     if choose == 'PDF拆分(zip打包)' and uploaded_files:
